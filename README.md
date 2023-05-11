@@ -15,7 +15,7 @@
 - Detailed per-pool logging to console & filesystem
 - Runs on Linux and Windows
 
-
+copy start-pool.sh to build and then run 
 
 ## Contributions
 
