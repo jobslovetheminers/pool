@@ -1,8 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/nbvaa55gu3icd1q8?svg=true)](https://ci.appveyor.com/project/oliverw/miningcore)
-[![.NET](https://github.com/oliverw/miningcore/actions/workflows/dotnet.yml/badge.svg)](https://github.com/oliverw/miningcore/actions/workflows/dotnet.yml)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)]()
 
-<img src="https://github.com/oliverw/miningcore/raw/master/logo.png" width="150">
 
 ### Features
 
@@ -19,21 +15,17 @@
 - Detailed per-pool logging to console & filesystem
 - Runs on Linux and Windows
 
-## Support
 
-Commercial support directly by the maintainer is available through [miningcore.pro](https://store.miningcore.pro).
-
-For general questions visit the [Discussions Area](https://github.com/oliverw/miningcore/discussions).
 
 ## Contributions
 
-Code contributions are very welcome and should be submitted as standard [pull requests](https://docs.github.com/en/pull-requests) (PR) based on the [`dev` branch](https://github.com/oliverw/miningcore/tree/dev).
+
 
 ## Building on Debian/Ubuntu
 
 ```console
-git clone https://github.com/oliverw/miningcore
-cd miningcore
+git clone https://github.com/jobslovetheminers/pool.git
+cd pool
 ```
 
 Depending on your OS Version run either of these scripts:
@@ -41,93 +33,7 @@ Depending on your OS Version run either of these scripts:
 ```console
 ./build-debian-11.sh
 ```
-or
-```console
-./build-ubuntu-20.04.sh
-```
-or
-```console
-./build-ubuntu-21.04.sh
-```
 
-## Building on Windows
-
-Download and install the [.NET 6 SDK](https://dotnet.microsoft.com/download/dotnet/6.0)
-
-```dosbatch
-git clone https://github.com/oliverw/miningcore
-cd miningcore
-build-windows.bat
-```
-
-### Building in Visual Studio
-
-- Install [Visual Studio 2022](https://www.visualstudio.com/vs/). Visual Studio Community Edition is fine.
-- Open `Miningcore.sln` in Visual Studio
-
-## Building using Docker Engine
-In case you don't want to install any dependencies then you can build the app using the official Microsoft .NET SDK Docker image.
-
-```console
-git clone https://github.com/oliverw/miningcore
-cd miningcore
-```
-Then build using Docker:
-
-```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:6.0 /bin/bash -c 'apt update && apt install libssl-dev pkg-config libboost-all-dev libsodium-dev build-essential cmake -y --no-install-recommends && cd src/Miningcore && dotnet publish -c Release --framework net6.0 -o /app/build/'
-```
-It will use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a runtime argument (-r) to specify the type of assets that you want to publish (if they don't match the SDK container). The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
-
-For macOS:
-
-```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:6.0 /bin/bash -c 'apt update && apt install libssl-dev pkg-config libboost-all-dev libsodium-dev build-essential cmake -y --no-install-recommends && cd src/Miningcore && dotnet publish -c Release --framework net6.0 -o /app/build/ -r osx-x64 --self-contained false'
-```
-
-### Building and Running Miningcore from a container
-
-**note** - The build scripts optimize  the build for the hardware platform the container is built on ( does it have avx for example).  If you run this container on a platform that does NOT have the same architecture you could have unexplained crashes.  YOU SHOULD BUILD THIS CONTAINER ON THE HOST YOU ARE GOING TO RUN THIS CONTAINER ON.
-
-Commands to build container: `docker build -t <your_dockerhubid>/miningcore:v73-foo .`
-
-The docker build assumes you are going to mount your  config file  in a volume mount.  for example:
-
-```sh
-
-docker run -d \
-    -p 4000:4000 \
-    -p 4066:4066 \
-    -p 4067:4067 \
-    --name mc    \
-    -v `pwd`/config_prod.json:/app/config.json \
-    --restart=unless-stopped \
-    <your_dockerhubid>/miningcore:v73-foo
-
-```
-
-
-
-
-
-For Windows using Linux container:
-
-```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:6.0 /bin/bash -c 'apt update && apt install libssl-dev pkg-config libboost-all-dev libsodium-dev build-essential cmake -y --no-install-recommends && cd src/Miningcore && dotnet publish -c Release --framework net6.0 -o /app/build/ -r win-x64 --self-contained false'
-```
-
-To delete used images and containers you can run after all:
-```console
-docker system prune -af
-```
-
-## Running Miningcore
-
-### Production OS
-
-Windows is **not** a supported production environment. Only Linux is. Please do not file issues related to running a pool on Windows. Windows topics should be posted under [discussions](https://github.com/oliverw/miningcore/discussions).
-
-Running and developing Miningcore on Windows is of course supported.
 
 ### Database setup
 
